@@ -5,9 +5,28 @@ import Header from './components/Header/Header.jsx';
 import CoreConcept from './components/CoreConcept.jsx';
 import TabButton from './components/TabButton.jsx';
 import { EXAMPLES } from './data.js';
+import UserInput from './components/UserInput.jsx';
+import Results from './components/Result.jsx';
 
 function App() {
   const [selectedTopic, setSelectedTopic] = useState();
+
+  const [userInput, setuserInput] = useState({
+      initialinvestment: 10000,
+      annualInvestment: 1200,
+      expectedReturn: 6,
+      duration: 10
+  });
+
+
+  function handleChange(inputIdentifier, newValue){
+    setuserInput(prevUserInput => {
+        return {
+            ...prevUserInput,
+            [inputIdentifier]: +newValue
+        };
+    });
+  }
 
   function handleSelect(selectedButton) {
     // selectedButton => 'components', 'jsx', 'props', 'state'
@@ -34,8 +53,12 @@ function App() {
   return (
     <div>
       <Header />
+      
       <main>
         <section id="core-concepts">
+        <UserInput userInput={userInput} onChange={handleChange} />
+
+        <Results Input={userInput} />
           <h2>Core Concepts</h2>
           <ul>
             {CORE_CONCEPTS.map((conceptItem) => (
