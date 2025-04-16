@@ -18,6 +18,8 @@ function App() {
       duration: 10
   });
 
+  const inputIsValid = userInput.duration >= 1;
+
 
   function handleChange(inputIdentifier, newValue){
     setuserInput(prevUserInput => {
@@ -57,8 +59,8 @@ function App() {
       <main>
         <section id="core-concepts">
         <UserInput userInput={userInput} onChange={handleChange} />
-
-        <Results Input={userInput} />
+        {!inputIsValid && <p>Please Enter duration grater than zero</p>}
+        {inputIsValid && <Results Input={userInput} />}
           <h2>Core Concepts</h2>
           <ul>
             {CORE_CONCEPTS.map((conceptItem) => (
